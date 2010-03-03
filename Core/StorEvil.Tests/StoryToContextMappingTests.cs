@@ -126,9 +126,7 @@ namespace StorEvil
             var dependent = (DependentMappingContext)ScenarioContext.GetContext(typeof(DependentMappingContext));
             
             Assert.That(dependent.DependsOn, Is.SameAs(dependedOn));
-        }
-
-        
+        }   
     }
 
     public class DisposableMappingContext : IDisposable

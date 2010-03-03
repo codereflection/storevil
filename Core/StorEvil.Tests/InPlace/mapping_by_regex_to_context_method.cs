@@ -25,7 +25,7 @@ namespace StorEvil.InPlace
         }
 
         [Test]
-        public void invokes_method_with_correct_param()
+        public void invokes_method_with_correct_param() 
         {
             InPlaceRunnerTestContext.RegexMatchParamValue.ShouldEqual(42);
         }

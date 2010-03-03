@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8EA2E836-2C94-4013-8D47-64F367AC9580}</ProjectGuid>
+    <ProjectGuid>{436259FA-036B-466E-A670-F91507C34D0A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pizza.TestContext</RootNamespace>
-    <AssemblyName>Pizza.TestContext</AssemblyName>
+    <RootNamespace>Pizza.Specifications</RootNamespace>
+    <AssemblyName>Pizza.Specifications</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\TestLibrary\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -46,24 +49,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Beer.cs" />
-    <Compile Include="Model\Discount.cs" />
-    <Compile Include="Model\IMenuItem.cs" />
-    <Compile Include="Model\Pizza.cs" />
-    <Compile Include="Model\PriceCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Slice.cs" />
-    <Compile Include="Model\Soda.cs" />
-    <Compile Include="Model\Order.cs" />
-    <Compile Include="TestContext\PizzaSpec.cs" />
-    <Compile Include="TestContext\PriceCalculatorTestContext.cs" />
-    <Compile Include="Model\Topping.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StorEvil\StorEvil.Core.csproj">
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pizza.TestContext\Pizza.TestContext.csproj">
+      <Project>{8EA2E836-2C94-4013-8D47-64F367AC9580}</Project>
+      <Name>Pizza.TestContext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\StorEvil\StorEvil.Core.csproj">
       <Project>{B86235CA-045F-4222-997C-A65E966C6F9B}</Project>
       <Name>StorEvil.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stories\BasicPricing.feature" />
+    <None Include="Stories\Discounts.feature" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -74,6 +77,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>REM "$(ProjectDir)\..\StorEvil.Console\bin\debug\StorEvil.Console" "$(TargetPath)" "$(ProjectDir)..\Pizza.Specifications\Stories" "$(ProjectDir)..\Pizza.Specifications\Generated.cs"</PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
