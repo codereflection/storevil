@@ -15,6 +15,7 @@ using JetBrains.ReSharper.UnitTestFramework.UI;
 using JetBrains.TreeModels;
 using JetBrains.UI.TreeView;
 using StorEvil.Configuration;
+using StorEvil.Core;
 using StorEvil.Parsing;
 
 namespace StorEvil.Resharper
@@ -22,6 +23,15 @@ namespace StorEvil.Resharper
     [UnitTestProvider]
     public class StorEvilTestProvider : IUnitTestProvider
     {
+        private static readonly AssemblyLoader AssemblyLoader = new AssemblyLoader();
+
+        static StorEvilTestProvider()
+        {
+            //AssemblyLoader.RegisterAssembly("StorEvil.Core", typeof(Scenario).Assembly.CodeBase);
+            AssemblyLoader.RegisterAssembly(typeof(Scenario).Assembly);
+        
+        }
+
         public ProviderCustomOptionsControl GetCustomOptionsControl(ISolution solution)
         {
             return null;
@@ -65,12 +75,16 @@ namespace StorEvil.Resharper
         // nunit and mstest providers work. 
         public IList<UnitTestTask> GetTaskSequence(UnitTestElement element, IList<UnitTestElement> explicitElements)
         {
+            var tasks = new List<UnitTestTask>();
+
+            //tasks.Add(new UnitTestTask(element, new AssemblyLoadTask(typeof(Scenario).Assembly.CodeBase)));
+
             if (element is StorEvilUnitTestElement)
             {
-                return ((StorEvilUnitTestElement)element).GetTaskSequence();
+                tasks.AddRange(((StorEvilUnitTestElement) element).GetTaskSequence());         
             }
-
-            return new List<UnitTestTask>();
+           
+            return tasks;
         }
 
         public int CompareUnitTestElements(UnitTestElement x, UnitTestElement y)
@@ -88,7 +102,7 @@ namespace StorEvil.Resharper
 
         public string ID
         {
-            get { return "storevil"; }
+            get { return "StorEvil"; }
         }
 
         public string Name
@@ -170,7 +184,7 @@ namespace StorEvil.Resharper
 
                 if (!string.IsNullOrEmpty(location.FullPath))
                 {
-                    var parent = new StorEvilProjectElement(this, null, project, project.Name);
+                    //var parent = new StorEvilProjectElement(this, null, project, project.Name);
 
                     //consumer(parent);
 
@@ -187,12 +201,15 @@ namespace StorEvil.Resharper
                         {
                             string title = story.Id;
 
-                            var storyElement = new StorEvilStoryElement(this, null, project, title);
+                            var storyElement = new StorEvilStoryElement(this, null, project, title, config);
                             consumer(storyElement);
 
                             foreach (var scenario in story.Scenarios)
                             {
-                                consumer(new StorEvilScenarioElement(this, storyElement, project, scenario.Name, scenario));
+                                if (scenario is Scenario)
+                                    consumer(new StorEvilScenarioElement(this, storyElement, project, scenario.Name, (Scenario) scenario));
+                                else
+                                    consumer(new StorEvilScenarioOutlineElement(this, storyElement, project, scenario.Name, (ScenarioOutline)scenario));
                             }
                         }
                     }

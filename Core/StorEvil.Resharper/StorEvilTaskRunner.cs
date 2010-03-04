@@ -5,6 +5,7 @@ namespace StorEvil.Resharper
 {
     public class StorEvilTaskRunner : RecursiveRemoteTaskRunner
     {
+
         public StorEvilTaskRunner(IRemoteTaskServer server)
             : base(server)
         {
@@ -62,7 +63,7 @@ namespace StorEvil.Resharper
             var remoteTask = scenarioNode.RemoteTask;
             Server.TaskStarting(remoteTask);
 
-            var scenario = ((RunScenarioTask) remoteTask).Scenario;
+            var scenario = ((RunScenarioTask) remoteTask).GetScenario();
 
             Server.TaskFinished(remoteTask, scenario.Name, fail ? TaskResult.Exception : TaskResult.Success);
         }

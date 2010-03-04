@@ -87,11 +87,11 @@
     <Compile Include="NUnit\NUnitTestGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StorEvil.Console\StorEvil.csproj">
+    <ProjectReference Include="..\..\Core\StorEvil.Console\StorEvil.csproj">
       <Project>{FBFE96FF-9D88-48DB-80F2-C79840BFDFA2}</Project>
       <Name>StorEvil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StorEvil\StorEvil.Core.csproj">
+    <ProjectReference Include="..\..\Core\StorEvil\StorEvil.Core.csproj">
       <Project>{B86235CA-045F-4222-997C-A65E966C6F9B}</Project>
       <Name>StorEvil.Core</Name>
     </ProjectReference>

@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Xml;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Tree;
-using JetBrains.ReSharper.TaskRunnerFramework;
 using JetBrains.ReSharper.UnitTestFramework;
 using JetBrains.Text;
-using StorEvil.Core;
 
 namespace StorEvil.Resharper
 {
@@ -90,62 +87,6 @@ namespace StorEvil.Resharper
         public virtual IList<UnitTestTask> GetTaskSequence()
         {
             return new List<UnitTestTask>();
-        }
-    }
-
-    public class RunScenarioTask : RemoteTask
-    {
-        public IScenario Scenario { get; set; }
-        private readonly StorEvilScenarioElement _element;
-
-        public RunScenarioTask()
-            : base("StorEvil")
-        {
-        }
-
-        public RunScenarioTask(XmlElement element) : base(element)
-        {
-            
-        }
-
-        public override void SaveXml(XmlElement element)
-        {
-            base.SaveXml(element);
-          
-        }
-
-        public RunScenarioTask(IScenario scenario) : base("StorEvil")
-        {
-            Scenario = scenario;
-        }
-    }
-
-    public class StorEvilStoryElement : StorEvilUnitTestElement
-    {
-        private readonly UnitTestNamespace _namespace = new UnitTestNamespace("namespace.foo");
-
-        public StorEvilStoryElement(StorEvilTestProvider provider, UnitTestElement parent, IProject project,
-                                       string title)
-            : base(provider, parent, project, title)
-        {
-            _namespace = new UnitTestNamespace(project.Name + ".namespaceYo");
-        }
-
-        public override UnitTestNamespace GetNamespace()
-        {
-            return _namespace;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is StorEvilUnitTestElement)
-            {
-                var testElement = (StorEvilUnitTestElement)obj;
-                return testElement.GetNamespace().NamespaceName == _namespace.NamespaceName &&
-                       testElement.GetTitle() == GetTitle();
-            }
-
-            return false;
         }
     }
 }
